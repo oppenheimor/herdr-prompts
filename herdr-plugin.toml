@@ -1,6 +1,6 @@
 id = "oppenheimor.herdr-prompts"
 name = "Herdr Prompts"
-version = "0.1.1"
+version = "0.1.2"
 min_herdr_version = "0.8.0"
 description = "Save, search, fill, and reuse prompt templates across coding agents in Herdr. Inspired by my friend: bingguanqi"
 platforms = ["macos"]

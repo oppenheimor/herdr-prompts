@@ -10,6 +10,7 @@ import {
   type PickerMode,
   visiblePrompts,
 } from "./picker-state.js";
+import { isBackwardDeletionKey } from "./input.js";
 import type { Prompt, PromptStore } from "./store.js";
 import { findTemplateVariables, materializePrompt } from "./template.js";
 
@@ -78,12 +79,8 @@ export function PickerApp({
         });
         return;
       }
-      if (key.backspace) {
+      if (isBackwardDeletionKey(key)) {
         dispatch({ type: "backspace" });
-        return;
-      }
-      if (key.delete) {
-        dispatch({ type: "delete-forward" });
         return;
       }
       if (key.return) {
@@ -106,7 +103,7 @@ export function PickerApp({
       dispatch({ type: "move", delta: -1 });
     } else if (key.downArrow) {
       dispatch({ type: "move", delta: 1 });
-    } else if (key.backspace) {
+    } else if (isBackwardDeletionKey(key)) {
       dispatch({ type: "set-query", query: state.query.slice(0, -1) });
     } else if (key.ctrl && input.toLowerCase() === "n") {
       dispatch({ type: "start-create" });

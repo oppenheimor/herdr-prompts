@@ -37177,6 +37177,11 @@ function indexAtGraphemeColumn(text, start, end, column) {
   return end;
 }
 
+// src/input.ts
+function isBackwardDeletionKey(key) {
+  return key.backspace || key.delete;
+}
+
 // src/template.ts
 var VARIABLE_NAME = /^[\p{L}\p{N}_]+$/u;
 function findTemplateVariables(content) {
@@ -37261,12 +37266,8 @@ function PickerApp({
         });
         return;
       }
-      if (key.backspace) {
+      if (isBackwardDeletionKey(key)) {
         dispatch({ type: "backspace" });
-        return;
-      }
-      if (key.delete) {
-        dispatch({ type: "delete-forward" });
         return;
       }
       if (key.return) {
@@ -37288,7 +37289,7 @@ function PickerApp({
       dispatch({ type: "move", delta: -1 });
     } else if (key.downArrow) {
       dispatch({ type: "move", delta: 1 });
-    } else if (key.backspace) {
+    } else if (isBackwardDeletionKey(key)) {
       dispatch({ type: "set-query", query: state.query.slice(0, -1) });
     } else if (key.ctrl && input.toLowerCase() === "n") {
       dispatch({ type: "start-create" });
